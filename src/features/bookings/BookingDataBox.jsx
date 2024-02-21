@@ -76,10 +76,8 @@ const Price = styled.div`
   border-radius: var(--border-radius-sm);
   margin-top: 2.4rem;
 
-  background-color: ${(props) =>
-    props.isPaid ? "var(--color-green-100)" : "var(--color-yellow-100)"};
-  color: ${(props) =>
-    props.isPaid ? "var(--color-green-700)" : "var(--color-yellow-700)"};
+  background-color: ${(props) => (props.isPaid ? "var(--color-green-100)" : "var(--color-yellow-100)")};
+  color: ${(props) => (props.isPaid ? "var(--color-green-700)" : "var(--color-yellow-700)")};
 
   & p:last-child {
     text-transform: uppercase;
@@ -131,16 +129,19 @@ function BookingDataBox({ booking }) {
 
         <p>
           {format(new Date(startDate), "EEE, MMM dd yyyy")} (
-          {isToday(new Date(startDate))
-            ? "Today"
-            : formatDistanceFromNow(startDate)}
-          ) &mdash; {format(new Date(endDate), "EEE, MMM dd yyyy")}
+          {isToday(new Date(startDate)) ? "Today" : formatDistanceFromNow(startDate)}) &mdash;{" "}
+          {format(new Date(endDate), "EEE, MMM dd yyyy")}
         </p>
       </Header>
 
       <Section>
         <Guest>
-          {countryFlag && <Flag src={countryFlag} alt={`Flag of ${country}`} />}
+          {countryFlag && (
+            <Flag
+              src={countryFlag}
+              alt={`Flag of ${country}`}
+            />
+          )}
           <p>
             {guestName} {numGuests > 1 ? `+ ${numGuests - 1} guests` : ""}
           </p>
@@ -153,24 +154,24 @@ function BookingDataBox({ booking }) {
         {observations && (
           <DataItem
             icon={<HiOutlineChatBubbleBottomCenterText />}
-            label="Observations"
-          >
+            label="Observations">
             {observations}
           </DataItem>
         )}
 
-        <DataItem icon={<HiOutlineCheckCircle />} label="Breakfast included?">
+        <DataItem
+          icon={<HiOutlineCheckCircle />}
+          label="Breakfast included?">
           {hasBreakfast ? "Yes" : "No"}
         </DataItem>
 
         <Price isPaid={isPaid}>
-          <DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>
+          <DataItem
+            icon={<HiOutlineCurrencyDollar />}
+            label={`Total price`}>
             {formatCurrency(totalPrice)}
 
-            {hasBreakfast &&
-              ` (${formatCurrency(cabinPrice)} cabin + ${formatCurrency(
-                extrasPrice
-              )} breakfast)`}
+            {hasBreakfast && ` (${formatCurrency(cabinPrice)} cabin + ${formatCurrency(extrasPrice)} breakfast)`}
           </DataItem>
 
           <p>{isPaid ? "Paid" : "Will pay at property"}</p>
