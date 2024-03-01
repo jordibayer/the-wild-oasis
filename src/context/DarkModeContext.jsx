@@ -10,6 +10,7 @@ function DarkModeProvider({ children }) {
   );
 
   useEffect(
+    //adding dark mode to the dom
     function () {
       if (isDarkMode) {
         document.documentElement.classList.add("dark-mode");
