@@ -79,7 +79,7 @@ Ensure you have Node.js and npm installed.
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/your-username/the-wild-oasis.git
+   git clone https://github.com/jordibayer/the-wild-oasis.git
    ```
 
 2. Navigate to the project directory:
@@ -113,7 +113,7 @@ Before running the application, you need to configure Supabase. The project will
    npm run dev
    ```
 
-2. Open your browser and visit `http://localhost:3000` to see the application in action.
+2. Open your browser and visit `http://localhost:5173` to see the application in action.
 
 ## Scripts
 
