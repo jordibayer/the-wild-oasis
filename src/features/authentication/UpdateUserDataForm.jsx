@@ -18,13 +18,14 @@ function UpdateUserDataForm() {
   } = useUser();
 
   const { updateUser, isUpdating } = useUpdateUser();
+  const { isAdmin } = useUser();
 
   const [fullName, setFullName] = useState(currentFullName);
   const [avatar, setAvatar] = useState(null);
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!fullName) return;
+    if (!fullName || !isAdmin) return;
     updateUser(
       { fullName, avatar },
       {
@@ -77,7 +78,7 @@ function UpdateUserDataForm() {
           onClick={handleCancel}>
           Cancel
         </Button>
-        <Button disabled={isUpdating}>Update account</Button>
+        <Button disabled={isUpdating || !isAdmin}>Update account</Button>
       </FormRow>
     </Form>
   );

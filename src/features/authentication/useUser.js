@@ -7,5 +7,10 @@ export function useUser() {
     queryFn: getCurrentUser,
   });
 
-  return { user, isLoading, isAuthenticated: user?.role === "authenticated" };
+  return {
+    user,
+    isLoading,
+    isAuthenticated: user?.role === "authenticated",
+    isAdmin: user?.id === "d837f8d0-e130-4058-9a88-3ec8ab1e222c",
+  };
 }

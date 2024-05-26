@@ -5,14 +5,18 @@ import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 
 import { useUpdateUser } from "./useUpdateUser";
+import { useUser } from "./useUser";
 
 function UpdatePasswordForm() {
   const { register, handleSubmit, formState, getValues, reset } = useForm();
+  const { isAdmin } = useUser();
+
   const { errors } = formState;
 
   const { updateUser, isUpdating } = useUpdateUser();
 
   function onSubmit({ password }) {
+    if (!isAdmin) return;
     updateUser({ password }, { onSuccess: reset });
   }
 
@@ -57,7 +61,7 @@ function UpdatePasswordForm() {
           variation="secondary">
           Cancel
         </Button>
-        <Button disabled={isUpdating}>Update password</Button>
+        <Button disabled={isUpdating || !isAdmin}>Update password</Button>
       </FormRow>
     </Form>
   );

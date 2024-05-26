@@ -4,13 +4,16 @@ import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import { useSignup } from "./useSignup";
+import { useUser } from "../authentication/useUser";
 
 function SignupForm() {
+  const { isAdmin } = useUser();
   const { signup, isLoading } = useSignup();
   const { register, formState, getValues, handleSubmit, reset } = useForm();
   const { errors } = formState;
 
   function onSubmit({ fullName, email, password }) {
+    if (!isAdmin) return;
     signup({ fullName, email, password }, { onSettled: () => reset });
   }
 
@@ -76,7 +79,7 @@ function SignupForm() {
           type="reset">
           Cancel
         </Button>
-        <Button disabled={isLoading}>Create new user</Button>
+        <Button disabled={isLoading || !isAdmin}>Create new user</Button>
       </FormRow>
     </Form>
   );

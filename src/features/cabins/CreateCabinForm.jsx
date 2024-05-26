@@ -5,6 +5,7 @@ import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
 import { useForm } from "react-hook-form";
+import { useUser } from "../authentication/useUser";
 
 import { useCreateCabin } from "./useCreateCabin";
 import { useUpdateCabin } from "./useUpdateCabin";
@@ -12,6 +13,7 @@ import { useUpdateCabin } from "./useUpdateCabin";
 function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   const { isCreating, createCabin } = useCreateCabin();
   const { isUpdating, updateCabin } = useUpdateCabin();
+  const { isAdmin } = useUser();
   const isWorking = isCreating || isUpdating;
 
   const { id: editId, ...editValues } = cabinToEdit;
@@ -23,12 +25,13 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   const { errors } = formState;
 
   function onSubmit(data) {
+    if (!isAdmin) return;
     const image = typeof data.image === "string" ? data.image : data.image[0];
     if (isEditSession)
       updateCabin(
         { newCabinData: { ...data, image }, id: editId },
         {
-          onSuccess: (data) => {
+          onSuccess: () => {
             reset(), onCloseModal?.();
           },
         }
@@ -37,14 +40,14 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
       createCabin(
         { ...data, image },
         {
-          onSuccess: (data) => {
+          onSuccess: () => {
             reset(), onCloseModal?.();
           },
         }
       );
   }
 
-  function onError(errors) {
+  function onError() {
     // console.log(errors);
   }
 
@@ -147,7 +150,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
           onClick={() => onCloseModal?.()}>
           Cancel
         </Button>
-        <Button disabled={isWorking}>{isEditSession ? "Edit cabin" : "Create new cabin"}</Button>
+        <Button disabled={isWorking || !isAdmin}>{isEditSession ? "Edit cabin" : "Create new cabin"}</Button>
       </FormRow>
     </Form>
   );
