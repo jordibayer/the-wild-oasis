@@ -11,6 +11,6 @@ export function useUser() {
     user,
     isLoading,
     isAuthenticated: user?.role === "authenticated",
-    isAdmin: user?.id === "d837f8d0-e130-4058-9a88-3ec8ab1e222c",
+    isAdmin: user?.id === "e2741bc6-453b-4627-82a1-4b2b706b4fa3",
   };
 }
